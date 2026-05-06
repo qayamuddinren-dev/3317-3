@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>纸牌四人积分器</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background:#f5f7fa;padding:15px;padding-bottom:30px;}
+h2{text-align:center;margin-bottom:20px;color:#333;}
+/* 四人总分区域 */
+.total-box{background:#fff;border-radius:16px;padding:20px;margin-bottom:15px;box-shadow:0 2px 10px #00000010;}
+.item-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:#eee 1px solid;}
+.item-row:last-child{border:none;}
+.name{font-size:16px;color:#555;}
+.score{font-size:20px;font-weight:bold;}
+.score.plus{color:#e53935;}
+.score.minus{color:#3498db;}
+/* 输入区域 */
+.input-box{background:#fff;border-radius:16px;padding:20px;margin-bottom:15px;}
+.input-title{font-size:15px;color:#666;margin-bottom:12px;}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+input{width:100%;height:46px;padding:0 12px;border:1px #ddd solid;border-radius:10px;font-size:16px;text-align:center;}
+.btn-row{display:flex;gap:10px;margin-top:15px;}
+button{flex:1;height:48px;border:none;border-radius:10px;font-size:16px;}
+.confirm{background:#27ae60;color:#fff;}
+.clear-last{background:#ff9800;color:#fff;}
+.reset-all{background:#e74c3c;color:#fff;}
+/* 每轮记录 */
+.log-box{background:#fff;border-radius:16px;padding:15px;}
+.log-title{font-size:15px;color:#666;margin-bottom:10px;}
+.log-item{font-size:14px;padding:8px 0;border-bottom:#f1f1f1 solid;color:#444;}
+.tip-text{font-size:12px;color:#999;text-align:center;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<h2>四人纸牌积分器</h2>
+
+<!-- 四人累计总分 -->
+<div class="total-box">
+  <div class="item-row">
+    <div class="name">🀄 东</div>
+    <div class="score" id="east">0</div>
+  </div>
+  <div class="item-row">
+    <div class="name">🀄 南</div>
+    <div class="score" id="south">0</div>
+  </div>
+  <div class="item-row">
+    <div class="name">🀄 西</div>
+    <div class="score" id="west">0</div>
+  </div>
+  <div class="item-row">
+    <div class="name">🀄 北</div>
+    <div class="score" id="north">0</div>
+  </div>
+</div>
+
+<!-- 本轮分数输入 -->
+<div class="input-box">
+  <div class="input-title">输入本轮分数（自动平衡四人总和=0）</div>
+  <div class="inp-row">
+    <input type="number" id="rEast" placeholder="东 本轮" value="0">
+    <input type="number" id="rSouth" placeholder="南 本轮" value="0">
+  </div>
+  <div class="inp-row">
+    <input type="number" id="rWest" placeholder="西 本轮" value="0">
+    <input type="number" id="rNorth" placeholder="北 本轮" value="0">
+  </div>
+  <div class="btn-row">
+    <button class="confirm" onclick="addRound()">确认本轮</button>
+    <button class="clear-last" onclick="undoRound()">撤销上一轮</button>
+  </div>
+  <div class="btn-row" style="margin-top:10px;">
+    <button class="reset-all" onclick="resetAll()">清空全部</button>
+  </div>
+</div>
+
+<!-- 对局记录 -->
+<div class="log-box">
+  <div class="log-title">对局记录</div>
+  <div id="logList"></div>
+</div>
+<div class="tip-text">规则：每轮四人分数总和强制 = 0，支持正负分</div>
+
+<script>
+// 累计总分
+let total = {east:0,south:0,west:0,north:0};
+// 每轮记录
+let roundList = [];
+
+// 赋值DOM
+const dom = {
+  east:document.getElementById('east'),
+  south:document.getElementById('south'),
+  west:document.getElementById('west'),
+  north:document.getElementById('north'),
+  rEast:document.getElementById('rEast'),
+  rSouth:document.getElementById('rSouth'),
+  rWest:document.getElementById('rWest'),
+  rNorth:document.getElementById('rNorth'),
+  log:document.getElementById('logList')
+};
+
+// 更新总分显示
+function renderTotal(){
+  setScoreDom(dom.east, total.east);
+  setScoreDom(dom.south, total.south);
+  setScoreDom(dom.west, total.west);
+  setScoreDom(dom.north, total.north);
+}
+function setScoreDom(el, num){
+  el.innerText = num;
+  el.className = "score";
+  if(num > 0) el.classList.add("plus");
+  if(num < 0) el.classList.add("minus");
+}
+
+// 更新日志
+function renderLog(){
+  dom.log.innerHTML = "";
+  roundList.forEach((item,idx)=>{
+    const div = document.createElement('div');
+    div.className = "log-item";
+    div.innerText = `第${idx+1}局｜东:${item.east} 南:${item.south} 西:${item.west} 北:${item.north}`;
+    dom.log.appendChild(div);
+  });
+}
+
+// 核心：自动保证四人之和=0
+function addRound(){
+  let e = Number(dom.rEast.value || 0);
+  let s = Number(dom.rSouth.value || 0);
+  let w = Number(dom.rWest.value || 0);
+  let n = Number(dom.rNorth.value || 0);
+
+  // 已填三人，自动计算第四人
+  let sum = e + s + w + n;
+  if(sum !== 0){
+    // 自动补差，让总和=0
+    if(n === 0 && w !== 0 && s !== 0 && e !== 0){
+      n = - (e + s + w);
+    }else if(w === 0 && n !== 0 && s !== 0 && e !== 0){
+      w = - (e + s + n);
+    }else if(s === 0 && n !== 0 && w !== 0 && e !== 0){
+      s = - (e + w + n);
+    }else if(e === 0 && n !== 0 && w !== 0 && s !== 0){
+      e = - (s + w + n);
+    }else{
+      // 任意情况强制归零
+      let fix = -(e + s + w + n);
+      n += fix;
+    }
+  }
+
+  // 保存本轮
+  const round = {east:e,south:s,west:w,north:n};
+  roundList.push(round);
+
+  // 累加总分
+  total.east += e;
+  total.south += s;
+  total.west += w;
+  total.north += n;
+
+  // 刷新
+  renderTotal();
+  renderLog();
+
+  // 清空输入
+  dom.rEast.value = 0;
+  dom.rSouth.value = 0;
+  dom.rWest.value = 0;
+  dom.rNorth.value = 0;
+}
+
+// 撤销上一轮
+function undoRound(){
+  if(roundList.length === 0) return alert("暂无记录可撤销");
+  let last = roundList.pop();
+  total.east -= last.east;
+  total.south -= last.south;
+  total.west -= last.west;
+  total.north -= last.north;
+  renderTotal();
+  renderLog();
+}
+
+// 全部重置
+function resetAll(){
+  if(!confirm("确定清空所有分数与记录？"))return;
+  total = {east:0,south:0,west:0,north:0};
+  roundList = [];
+  renderTotal();
+  renderLog();
+}
+
+// 初始化
+renderTotal();
+</script>
+</body>
+</html>
