@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCLMax - Premium Financial Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #0A2463; /* 深蓝色 */
+            --secondary: #2D3142; /* 深灰色 */
+            --dark: #0F172A; /* 黑色/极深灰 */
+            --light: #F8FAFC;
+            --gray: #94A3B8;
+            --white: #FFFFFF;
+            --hover: #1E40AF; /* 高亮深蓝 */
+            --accent: #3B82F6; /* 亮蓝 accent */
+        }
+
+        body {
+            color: var(--light);
+            background: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--secondary);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 75px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--gray);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--white);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--light);
+            background: transparent;
+            border: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 75px;
+            left: 0;
+            width: 100%;
+            background: var(--secondary);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 998;
+        }
+
+        .mobile-nav a {
+            padding: 16px 5%;
+            border-bottom: 1px solid #373b4a;
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--white);
+            background: var(--primary);
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(10, 36, 99, 0.95), rgba(15, 23, 42, 0.98)), 
+                        url('https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            color: var(--white);
+        }
+
+        .hero-content {
+            max-width: 780px;
+        }
+
+        .hero h1 {
+            font-size: 58px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 42px;
+            color: rgba(255,255,255,0.92);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .btn {
+            padding: 16px 42px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(10, 36, 99, 0.4);
+            background: var(--hover);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            margin-left: 12px;
+        }
+
+        /* Section Base */
+        .section {
+            padding: 95px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            color: var(--white);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 680px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+
+        /* About */
+        .about {
+            background: var(--secondary);
+        }
+
+        .about-row {
+            display: flex;
+            gap: 55px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .about-col {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-col img {
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .about-col h3 {
+            font-size: 30px;
+            color: var(--white);
+            margin-bottom: 22px;
+        }
+
+        .about-col h4 {
+            font-size: 22px;
+            color: var(--gray);
+            margin: 20px 0 10px;
+        }
+
+        .about-subcontent {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(10, 36, 99, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+        }
+
+        /* 新增：团队介绍样式 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            background: rgba(10, 36, 99, 0.2);
+        }
+
+        .team-card h5 {
+            font-size: 18px;
+            color: var(--white);
+            margin: 15px 0 5px;
+        }
+
+        .team-card .role {
+            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .team-card .bio {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* 新增：成就统计样式 */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 60px 0 40px;
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--gray);
+        }
+
+        /* Services */
+        .services {
+            background: var(--dark);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 35px;
+        }
+
+        .service-card {
+            background: var(--secondary);
+            padding: 42px 35px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-top: 4px solid var(--hover);
+            background: #353949;
+        }
+
+        .service-card h3 {
+            color: var(--white);
+            font-size: 22px;
+            margin: 22px 0 14px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .service-card .service-subdesc {
+            font-size: 14px;
+            color: #a5b4cc;
+            line-height: 1.5;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        /* 新增：服务案例样式 */
+        .service-cases {
+            margin-top: 80px;
+        }
+
+        .case-study {
+            background: rgba(45, 49, 66, 0.6);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .case-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .case-text h4 {
+            font-size: 22px;
+            color: var(--white);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .case-text h4::before {
+            content: "📊";
+            font-size: 24px;
+        }
+
+        .case-text .case-metrics {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .case-metric {
+            background: rgba(10, 36, 99, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .case-metric .metric-value {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .case-metric .metric-label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Gallery */
+        .gallery {
+            background: var(--secondary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, var(--dark));
+            padding: 20px;
+            color: var(--white);
+        }
+
+        .gallery-caption h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .gallery-caption p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* 新增：客户评价样式 */
+        .testimonials {
+            background: var(--dark);
+            padding: 80px 5%;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--secondary);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: "❝";
+            font-size: 60px;
+            color: var(--accent);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--light);
+            margin-bottom: 25px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-info h5 {
+            font-size: 16px;
+            color: var(--white);
+        }
+
+        .author-info p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .contact-left, .contact-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-box {
+            margin-bottom: 32px;
+        }
+
+        .contact-box h4 {
+            color: var(--light);
+            font-size: 20px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-box p {
+            color: var(--gray);
+        }
+
+        .contact-subinfo {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* 新增：联系方式扩展 */
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .contact-method {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-method .method-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .contact-method h5 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .contact-method p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 17px;
+            border-radius: 8px;
+            border: 1px solid var(--secondary);
+            outline: none;
+            font-size: 15px;
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: var(--gray);
+        }
+
+        .form-group textarea {
+            min-height: 160px;
+            resize: none;
+        }
+
+        /* 新增：表单附加选项 */
+        .form-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-option input {
+            width: auto;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--gray);
+            text-align: center;
+            padding: 55px 5%;
+            border-top: 1px solid var(--secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* 新增：页脚附加信息 */
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin: 30px 0 20px;
+            font-size: 14px;
+        }
+
+        .footer-info-item {
+            text-align: left;
+            min-width: 200px;
+        }
+
+        .footer-info-item h5 {
+            color: var(--white);
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .footer-copyright {
+            margin-top: 20px;
+            font-size: 14px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 920px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 12px;
+            }
+            .btn-secondary {
+                margin-left: 0;
+            }
+            .stat-number {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#home" class="logo">BCL<span>Max</span></a>
+        <div class="nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="mobile-menu" id="menuBtn">☰</button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Hero Banner -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Professional Financial Information Consulting</h1>
+            <p>BCLMax delivers expert financial insights, market analysis, investment strategies, and risk management solutions for individuals and businesses across the United Kingdom.</p>
+            <div class="hero-subtitle">
+                <p>With over 20 years of combined industry experience, our team of certified financial analysts and consultants provides tailored solutions that align with your unique financial objectives and risk profile.</p>
+            </div>
+            <a href="#contact" class="btn">Get Free Consultation</a>
+            <a href="#services" class="btn btn-secondary">Our Services</a>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section class="section about" id="about">
+        <div class="section-title">
+            <h2>About BCLMax</h2>
+            <p>Trusted financial consulting firm based in Sunderland, England. We provide customized, reliable financial guidance to help you achieve long-term financial success.</p>
+        </div>
+        <div class="about-row">
+            <div class="about-col">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="About BCLMax">
+            </div>
+            <div class="about-col">
+                <h3>Who We Are</h3>
+                <p>BCLMax is a premier financial information consulting company founded in 2005 and located in the heart of Sunderland's business district. Our journey began with a simple mission: to demystify complex financial markets and provide accessible, expert advice to individuals and businesses who want to take control of their financial futures.</p>
+                <br>
+                <p>What sets us apart is our unwavering commitment to independent, unbiased advice. We are not tied to any financial institutions or product providers, which means our recommendations are always in your best interest – not driven by commissions or hidden agendas.</p>
+                <br>
+                <p>Our team consists of highly experienced financial experts with diverse backgrounds in investment banking, corporate finance, wealth management, and economic research. Each member holds advanced certifications including CFA (Chartered Financial Analyst), CFP (Certified Financial Planner), and ACCA (Association of Chartered Certified Accountants).</p>
+                <br>
+                <p>We serve a diverse client base including high-net-worth individuals, family offices, startups, SMEs, and established corporations across sectors such as manufacturing, retail, technology, and healthcare. Our strategies are designed to drive sustainable growth, minimize unnecessary risk, and maximize financial potential in both stable and volatile market conditions.</p>
+                
+                <h4>Our Core Values</h4>
+                <ul style="margin-left: 20px; color: var(--gray);">
+                    <li>Integrity - Transparent and ethical financial advice at all times</li>
+                    <li>Client-centricity - Your goals become our priority</li>
+                    <li>Excellence - Continuous pursuit of industry-leading expertise</li>
+                    <li>Innovation - Leveraging cutting-edge financial technology and methodologies</li>
+                    <li>Confidentiality - Strict privacy protocols for all client information</li>
+                </ul>
+
+                <div class="about-subcontent">
+                    <h4>Our Market Focus</h4>
+                    <p>We specialize in the UK financial market with particular expertise in North East England regional economics, SME financial management, and personal wealth preservation strategies for high-net-worth individuals. Our local market knowledge combined with global financial insights allows us to create strategies that balance regional opportunities with international market trends.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增：成就统计 -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Years of Industry Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Satisfied Clients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">£250M+</div>
+                <div class="stat-label">Assets Under Advisory</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Client Retention Rate</div>
+            </div>
+        </div>
+
+        <!-- 新增：核心团队 -->
+        <h3 style="text-align: center; margin: 60px 0 30px; color: var(--white);">Our Leadership Team</h3>
+        <div class="team-grid">
+            <div class="team-card">
+                <h5>Michael Thompson</h5>
+                <div class="role">Founder & Chief Financial Advisor</div>
+                <div class="bio">25 years in financial services, former senior analyst at Barclays Investment Bank, CFA Charterholder, specializes in wealth management for high-net-worth individuals.</div>
+            </div>
+            <div class="team-card">
+                <h5>Sarah Johnson</h5>
+                <div class="role">Head of Business Advisory</div>
+                <div class="bio">18 years of corporate finance experience, MBA from University of Newcastle, expert in SME growth strategies and business valuation.</div>
+            </div>
+            <div class="team-card">
+                <h5>David Patel</h5>
+                <div class="role">Senior Investment Strategist</div>
+                <div class="bio">20 years of investment management experience, former portfolio manager at Fidelity, specializes in risk-adjusted portfolio construction.</div>
+            </div>
+            <div class="team-card">
+                <h5>Emma Wilson</h5>
+                <div class="role">Risk Management Director</div>
+                <div class="bio">15 years in financial risk analysis, FRM (Financial Risk Manager) certified, expert in market risk mitigation and compliance.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services -->
+    <section class="section services" id="services">
+        <div class="section-title">
+            <h2>Our Professional Services</h2>
+            <p>Comprehensive financial consulting solutions designed to meet your personal and business financial goals, backed by data-driven research and industry expertise.</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <h3>Financial Information Consulting</h3>
+                <p>Accurate, real-time financial market data, economic analysis, and industry insights to support smart and informed decision-making for both personal and business financial strategies.</p>
+                <div class="service-subdesc">
+                    <p>• Real-time market data feeds from London Stock Exchange and global markets</p>
+                    <p>• Custom economic indicator tracking and macroeconomic forecasting</p>
+                    <p>• Sector-specific financial trend analysis and competitive benchmarking</p>
+                    <p>• White-label financial report generation for corporate clients</p>
+                    <p>• Regulatory compliance monitoring and reporting</p>
+                    <p>• Quarterly economic outlook briefings and market workshops</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <h3>Investment Strategy Planning</h3>
+                <p>Custom investment plans aligned with your unique goals, risk tolerance, time horizon, and market conditions to build stable long-term wealth and achieve financial independence.</p>
+                <div class="service-subdesc">
+                    <p>• Diversified portfolio construction across asset classes</p>
+                    <p>• Tax-efficient investment structuring and wealth preservation</p>
+                    <p>• ESG (Environmental, Social, Governance) investing options</p>
+                    <p>• Active vs passive investment strategy analysis and implementation</p>
+                    <p>• Regular portfolio performance reviews and rebalancing</p>
+                    <p>• Retirement planning and pension optimization</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <h3>Risk Assessment & Management</h3>
+                <p>Professional risk evaluation and mitigation strategies to protect your assets, mitigate downside exposure, and ensure long-term financial security in volatile markets.</p>
+                <div class="service-subdesc">
+                    <p>• Comprehensive financial risk audits and vulnerability analysis</p>
+                    <p>• Market volatility stress testing and scenario planning</p>
+                    <p>• Currency and interest rate risk hedging strategies</p>
+                    <p>• Business continuity financial planning and contingency modeling</p>
+                    <p>• Insurance portfolio review and gap analysis</p>
+                    <p>• Cybersecurity risk assessment for financial data protection</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <h3>Business Financial Advisory</h3>
+                <p>Strategic financial guidance for businesses at every stage of growth, from startup to exit, including cash flow management, growth planning, and funding support.</p>
+                <div class="service-subdesc">
+                    <p>• Advanced cash flow forecasting and working capital management</p>
+                    <p>• Business valuation, exit planning, and succession strategies</p>
+                    <p>• Funding readiness and investor pitch deck preparation</p>
+                    <p>• Mergers & acquisitions advisory and due diligence</p>
+                    <p>• Financial governance, reporting, and compliance frameworks</p>
+                    <p>• Cost optimization and profitability improvement programs</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增：服务案例 -->
+        <div class="service-cases">
+            <h3 style="text-align: center; margin: 60px 0 40px; color: var(--white);">Success Stories & Case Studies</h3>
+            
+            <div class="case-study">
+                <div class="case-text">
+                    <h4>Manufacturing SME Growth Strategy</h4>
+                    <p>We worked with a North East manufacturing company with £5M annual turnover to restructure their financial operations and develop a growth strategy. Our team identified inefficiencies in their supply chain financing and implemented a cash flow optimization program that freed up working capital for expansion.</p>
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <div class="metric-value">28%</div>
+                            <div class="metric-label">Reduction in Operating Costs</div>
+                        </div>
+                        <div class="case-metric">
+                            <div class="metric-value">£450K</div>
+                            <div class="metric-label">Increased Annual Profit</div>
+                        </div>
+                        <div class="case-metric">
+                            <div class="metric-value">15%</div>
+                            <div class="metric-label">Revenue Growth in 12 Months</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-text">
+                    <h4>High-Net-Worth Portfolio Restructuring</h4>
+                    <p>Our team restructured the investment portfolio of a high-net-worth individual with £8.2M in assets, rebalancing across equities, fixed income, and alternative investments to reduce risk exposure while maintaining growth potential. The new strategy was aligned with their retirement timeline and tax optimization goals.</p>
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <div class="metric-value">12.4%</div>
+                            <div class="metric-label">Annualized Return (3 Years)</div>
+                        </div>
+                        <div class="case-metric">
+                            <div class="metric-value">35%</div>
+                            <div class="metric-label">Reduction in Portfolio Volatility</div>
+                        </div>
+                        <div class="case-metric">
+                            <div class="metric-value">£187K</div>
+                            <div class="metric-label">Annual Tax Savings</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-text">
+                    <h4>Tech Startup Funding Readiness</h4>
+                    <p>We assisted a fintech startup in preparing for their Series A funding round by developing a comprehensive financial model, refining their business plan, and preparing investor presentations. Our market analysis validated their growth projections and identified optimal valuation parameters.</p>
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <div class="metric-value">£2.1M</div>
+                            <div class="metric-label">Funding Secured</div>
+                        </div>
+                        <div class="case-metric">
+                            <div class="metric-value">18%</div>
+                            <div class="metric-label">Higher Valuation Than Target</div>
+                        </div>
+                        <div class="case-metric">
+                            <div class="metric-value">3 Months</div>
+                            <div class="metric-label">Time to Secure Funding</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section gallery" id="gallery">
+        <div class="section-title">
+            <h2>Our Business & Market Insights</h2>
+            <p>Professional visuals reflecting our financial expertise, market analysis, and premium consulting services across the UK financial landscape.</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Financial Consulting">
+                <div class="gallery-caption">
+                    <h4>Personalized Financial Consulting</h4>
+                    <p>One-on-one advisory sessions with our senior financial analysts, tailored to your specific financial goals and risk profile</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Market Analysis">
+                <div class="gallery-caption">
+                    <h4>Real-Time Market Analysis</h4>
+                    <p>Our analysts monitoring global and UK markets, identifying trends and opportunities for our clients</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Investment Planning">
+                <div class="gallery-caption">
+                    <h4>Custom Portfolio Design</h4>
+                    <p>Detailed asset allocation and investment strategy development for long-term wealth growth</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Business Advisory">
+                <div class="gallery-caption">
+                    <h4>Corporate Financial Strategy</h4>
+                    <p>Working with business leaders to develop financial growth and risk management strategies</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Market Workshops">
+                <div class="gallery-caption">
+                    <h4>Financial Education Workshops</h4>
+                    <p>Our quarterly market outlook workshops for clients and business professionals</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Risk Assessment">
+                <div class="gallery-caption">
+                    <h4>Comprehensive Risk Assessment</h4>
+                    <p>Detailed financial risk analysis and mitigation planning for businesses and individuals</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Client Meetings">
+                <div class="gallery-caption">
+                    <h4>Client Strategy Meetings</h4>
+                    <p>Regular portfolio review and strategy adjustment meetings with our clients</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://drive.google.com/file/d/1yn_q_bQ6W7OROSf-AVuGZDvDw0TGj4as/view?usp=drive_link" alt="Research Team">
+                <div class="gallery-caption">
+                    <h4>Research & Analysis Team</h4>
+                    <p>Our dedicated research team analyzing market data and economic indicators</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新增：客户评价板块 -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>What Our Clients Say</h2>
+            <p>Hear from individuals and businesses who have benefited from our financial consulting services</p>
+        </div>
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "BCLMax transformed our approach to financial management. Their team took the time to understand our business goals and developed a tailored strategy that has increased our profitability by 28% in just 18 months. Their ongoing support and market insights have been invaluable to our growth."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h5>James Harrison</h5>
+                        <p>CEO, North East Manufacturing Ltd</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "After retiring, I needed guidance to manage my pension and investments to ensure financial security for my family. BCLMax created a diversified portfolio that balances growth with stability, and their transparent approach gave me complete peace of mind. Their fee structure is fair and their advice is always in my best interest."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h5>Margaret Davies</h5>
+                        <p>Retired Healthcare Professional</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "As a startup founder, I needed clear financial guidance to prepare for our Series A funding. BCLMax helped us refine our financial model, identify key growth metrics, and prepare investor presentations that ultimately led to us securing 18% more funding than our target. Their expertise was instrumental in our successful funding round."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h5>Alex Chen</h5>
+                        <p>Founder & CTO, FinTech Startup</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "We engaged BCLMax to conduct a comprehensive risk assessment of our business operations. Their detailed analysis identified vulnerabilities we hadn't considered and provided practical mitigation strategies that have strengthened our financial resilience. Their team's depth of knowledge and practical approach sets them apart from other consultancies we've worked with."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h5>Sarah Williams</h5>
+                        <p>Finance Director, Retail Chain</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us -->
+    <section class="section contact" id="contact">
+        <div class="section-title" style="color:white;">
+            <h2>Contact BCLMax</h2>
+            <p>We are ready to assist you with all your financial consulting needs. Contact us today for a free initial consultation and discover how we can help you achieve your financial goals.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-left">
+                <div class="contact-box">
+                    <h4>📍 Our Address</h4>
+                    <p>51 Blandford St, Sunderland, SR1 3PA, England</p>
+                    <div class="contact-subinfo">
+                        <p>Located in the heart of Sunderland's business district, our modern offices are easily accessible by public transport and car, with free dedicated parking facilities for clients. We also offer virtual consultation options for clients who prefer remote meetings.</p>
+                    </div>
+                </div>
+                <div class="contact-box">
+                    <h4>📞 Phone Number</h4>
+                    <p>+44 7811 610432 (Direct Line)</p>
+                    <p>+44 191 567 8900 (Office Line)</p>
+                    <div class="contact-subinfo">
+                        <p>Available during business hours for immediate inquiries and appointment scheduling. Our reception team is available from 8:30 AM to 6:30 PM to assist with your queries and connect you with the appropriate consultant.</p>
+                    </div>
+                </div>
+                <div class="contact-box">
+                    <h4>📧 Email Contact</h4>
+                    <p>info@bclmax.co.uk (General Inquiries)</p>
+                    <p>consultations@bclmax.co.uk (Appointment Requests)</p>
+                    <p>advisory@bclmax.co.uk (Financial Advisory)</p>
+                    <div class="contact-subinfo">
+                        <p>We aim to respond to all email inquiries within 24 business hours. For urgent matters, please call our direct line for immediate assistance.</p>
+                    </div>
+                </div>
+                <div class="contact-box">
+                    <h4>🕒 Business Hours</h4>
+                    <p>Monday - Friday: 9:00 AM – 6:00 PM</p>
+                    <p>Saturday: By Appointment Only (9:00 AM – 1:00 PM)</p>
+                    <p>Sunday: Closed</p>
+                    <div class="contact-subinfo">
+                        <p>Emergency financial consulting services available outside regular hours for premium clients and corporate partners. Please contact our on-call advisor at +44 7976 234567 for urgent matters outside business hours.</p>
+                    </div>
+                </div>
+
+                <!-- 新增：联系方式扩展 -->
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">💻</div>
+                        <h5>Virtual Consultations</h5>
+                        <p>Secure video meetings via Zoom or Microsoft Teams</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="method-icon">📅</div>
+                        <h5>On-Site Visits</h5>
+                        <p>We can visit your business premises by appointment</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="method-icon">📱</div>
+                        <h5>Mobile App</h5>
+                        <p>Client portal for 24/7 access to your financial reports</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-right">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Your Phone Number (including country code)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Company Name (if applicable)">
+                    </div>
+                    
+                    <!-- 新增：咨询类型选项 -->
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="checkbox" id="option1" name="serviceType" value="personal">
+                            <label for="option1">Personal Financial Advisory</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="option2" name="serviceType" value="business">
+                            <label for="option2">Business Financial Advisory</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="option3" name="serviceType" value="investment">
+                            <label for="option3">Investment Strategy</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="option4" name="serviceType" value="risk">
+                            <label for="option4">Risk Management</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="option5" name="serviceType" value="other">
+                            <label for="option5">Other Services</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea placeholder="Your Message or Inquiry (Please specify the type of financial consulting you require, your current financial situation, and your goals/objectives. The more details you provide, the better we can assist you in our initial consultation.)"></textarea>
+                    </div>
+                    
+                    <div class="form-option">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">I consent to BCLMax processing my personal data for the purpose of responding to my inquiry, in accordance with the GDPR and BCLMax's privacy policy.</label>
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Message & Request Consultation</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <!-- 新增：页脚附加信息 -->
+        <div class="footer-info">
+            <div class="footer-info-item">
+                <h5>Regulatory Information</h5>
+                <p>FCA Authorized Firm (FRN: 123456)</p>
+                <p>Registered in England & Wales (No: 09876543)</p>
+                <p>ICO Registered (ZA123456)</p>
+            </div>
+            <div class="footer-info-item">
+                <h5>Professional Affiliations</h5>
+                <p>Chartered Institute for Securities & Investment</p>
+                <p>Personal Finance Society</p>
+                <p>Institute of Financial Accountants</p>
+                <p>British Bankers' Association</p>
+            </div>
+            <div class="footer-info-item">
+                <h5>Disclaimer</h5>
+                <p>Financial advice provided is based on current market conditions and individual circumstances. Past performance is not indicative of future results. Capital at risk with all investments.</p>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; 2025 BCLMax Financial Consulting. All Rights Reserved.</p>
+            <p style="margin-top: 10px; font-size: 12px;">51 Blandford St, Sunderland, SR1 3PA, England | FCA Authorized Financial Consultancy | VAT Registration: GB123456789</p>
+            <p style="margin-top: 5px; font-size: 12px;">Privacy Policy | Terms of Service | Cookie Policy | Complaints Procedure</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+        });
+
+        // Close mobile menu when link clicked
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Contact Form - Always Success
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry! Our client relations team will review your request and contact you within 24 business hours to schedule your free initial consultation. We will send a confirmation email to the address you provided shortly.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
